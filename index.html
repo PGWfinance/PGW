@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Membership Checker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin: 0.5rem;
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h2>🔍 Membership Checker</h2>
+  <p>Enter your full name as registered to check your status:</p>
+
+  <input type="text" id="name" placeholder="e.g., Juan Dela Cruz" />
+  <button onclick="checkStatus()">Check Status</button>
+
+  <p id="result"></p>
+
+  <script>
+    function checkStatus() {
+      const name = document.getElementById("name").value.trim();
+      if (!name) {
+        document.getElementById("result").innerText = "Please enter a name.";
+        return;
+      }
+
+      fetch(`https://script.google.com/macros/s/AKfycbwU_SJ1oVEHyzjtGoVywnRXuNgTHlPLMujYaLV941yxU855810uGcQHp4eNh86JmNAV/exec?name=${encodeURIComponent(name)}`)
+        .then(response => response.text())
+        .then(status => {
+          document.getElementById("result").innerText = `Status: ${status}`;
+        })
+        .catch(error => {
+          document.getElementById("result").innerText = "❌ Error checking status.";
+        });
+    }
+  </script>
+</body>
+</html>
